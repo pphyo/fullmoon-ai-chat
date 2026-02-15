@@ -1,8 +1,12 @@
 import sqlite3
+import os
 import uuid
 from flask import g
 
-DATABASE = 'chat_history.db'
+if os.getenv('FLASK_ENV') == 'production':
+    DATABASE = '/home/pphyo/mysite/chat_history.db'
+else:
+    DATABASE = 'chat_history.db'
 
 def get_db():
     db = getattr(g, '_database', None)

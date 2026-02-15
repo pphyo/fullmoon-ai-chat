@@ -1,10 +1,15 @@
 from flask import Flask, g
 from flask_cors import CORS
 from app.db import init_db
+import os
 
 def create_app():
     app = Flask(__name__)
-    CORS(app, resources={r"/*": {"origins": "*"}})
+
+    if os.getenv('FLASK_ENV') == 'production':
+        CORS(app, resources={r"/*": {"origins": "https://fullmoon.vercel.app"}})
+    else:
+        CORS(app, resources={r"/*": {"origins": "*"}})
 
     @app.after_request
     def after_request(response):
